@@ -1,6 +1,6 @@
 package com.application.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.application.entity.enumeration.DocumentEnum;
 import com.application.entity.enumeration.TypeEnum;
@@ -60,9 +62,11 @@ public class Data {
 	private String bookTitle;
 	
 	@Column(name = "DATE_ADDED", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateAdded;
 	
 	@Column(name = "DATE_MODIFIED")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateModified;
 	
 	@Column(name = "DOC_DELIVERY_NUMBER")
@@ -597,5 +601,10 @@ public class Data {
 
 	public void setYear(int year) {
 		this.year = year;
+	}
+
+	@Override
+	public String toString() {
+		return id + " " + typeBibliography.name() + " " + nameBibliography;
 	}
 }

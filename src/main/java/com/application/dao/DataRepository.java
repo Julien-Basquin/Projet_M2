@@ -7,5 +7,5 @@ import com.application.entity.Data;
 
 @Repository
 public interface DataRepository extends CrudRepository<Data, Long> {
-
+	
 }

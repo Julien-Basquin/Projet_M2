@@ -1,13 +1,36 @@
 package com.application.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.application.dao.DataRepository;
+import com.application.entity.Data;
 
 @Service
 public class QueryMethodsServiceImpl implements QueryMethodsService {
 
+	@Autowired
+	private DataRepository dataRepository;
+	
+	@PersistenceContext
+	private EntityManager em;
+	
+	public QueryMethodsServiceImpl(EntityManager em) {
+		this.em = em;
+	}
+	
 	@Override
 	public boolean checkQueryValidity(final String query) {
 		final String excludedKeywords = "add|alter|backup|create|delete|default|drop|exec|insert|into|set|truncate|update";
@@ -17,6 +40,27 @@ public class QueryMethodsServiceImpl implements QueryMethodsService {
 		Matcher m = p.matcher(query);
 		
 		return !m.find();
+	}
+
+	@Override
+	public List<Data> executeQuery(String query) {
+		if (checkQueryValidity(query)) {
+			return (List<Data>) em.createNativeQuery(query, Data.class).getResultList();
+		}
+		
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public long createData(Data data) {
+		if (data != null) {
+			data.setDateAdded(new Date(System.currentTimeMillis()));
+			
+			return dataRepository.save(data).getId();
+		}
+		
+		return -1;
 	}
 
 }

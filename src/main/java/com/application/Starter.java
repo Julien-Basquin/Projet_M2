@@ -1,10 +1,15 @@
 package com.application;
 
+import java.sql.Date;
+import java.time.Instant;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -14,8 +19,13 @@ import com.application.configuration.WebSecurityConfig;
 import com.application.dao.AuthorityRepository;
 import com.application.dao.UserRepository;
 import com.application.entity.Authority;
+import com.application.entity.Data;
 import com.application.entity.User;
 import com.application.entity.enumeration.AuthorityEnum;
+import com.application.entity.enumeration.DocumentEnum;
+import com.application.entity.enumeration.TypeEnum;
+import com.application.service.QueryMethodsService;
+import com.application.service.QueryMethodsServiceImpl;
 
 @SpringBootApplication
 public class Starter {
@@ -26,6 +36,7 @@ public class Starter {
 	public static void main(String[] args) {
 		ApplicationContext context =   SpringApplication.run(Starter.class, args);
 		//insertUserAndGetUser(context);
+		dataTest(context);
 	}
 
 
@@ -52,6 +63,20 @@ public class Starter {
 		log.info("ici");
 		userRepository.save(user2);
 
+	}
+	
+	private static void dataTest(ApplicationContext context) {
+		QueryMethodsService queryMethodsService = context.getBean(QueryMethodsServiceImpl.class);
+		
+		Data data = new Data();
+		data.setTypeBibliography(TypeEnum.ARTICLE);
+		data.setNameBibliography("Test");
+		data.setDocumentType(DocumentEnum.ARTICLE);
+		
+		queryMethodsService.createData(data);
+		
+		System.out.println(queryMethodsService.executeQuery("SELECT * FROM DATA"));
+		System.out.println(queryMethodsService.executeQuery("DROP TABLE DATA"));
 	}
 
 }
