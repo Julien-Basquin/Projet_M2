@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,13 +34,14 @@ public class Data {
 	@Column(name = "NAME_BIBLIOGRAPHY", nullable = false)
 	private String nameBibliography;
 	
-	@Column(name = "ABSTRACT", length = 4096)
+	@Lob
+	@Column(name = "ABSTRACT")
 	private String summary;
 	
 	@Column(name = "ADDRESS")
 	private String address;
 
-	@Column(name = "AFFILIATION")
+	@Column(name = "AFFILIATION", length = 2048)
 	private String affiliation;
 	
 	@Column(name = "ARTICLE_NUMBER")
@@ -51,12 +53,13 @@ public class Data {
 	@Column(name = "AUTHOR_EMAIL")
 	private String authorEmail;
 	
+	@Lob
 	@Column(name = "AUTHOR_KEYWORDS")
 	private String authorKeywords;
 
 	@Column(name = "BDSK_URL")
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Bdsk_url.class)
-	private List<String> bdskUrl;
+	private List<Bdsk_url> bdskUrl;
 	
 	@Column(name = "BOOK_TITLE")
 	private String bookTitle;
@@ -72,18 +75,32 @@ public class Data {
 	@Column(name = "DOC_DELIVERY_NUMBER")
 	private String docDeliveryNumber;
 	
-	@Column(name = "DOCUMENT_TYPE", nullable = false)
+	@Column(name = "DOCUMENT_TYPE")
 	private DocumentEnum documentType;
 	
 	@Column(name = "DOI")
 	private String doi;
 	
+	@Column(name = "EDITOR")
+	private String editor;
+	
 	@Column(name = "EISSN")
 	private String eissn;
+	
+	@Column(name = "FUNDING_ACKNOWLEDGEMENT")
+	private String fundingAcknowledgement;
+	
+	@Lob
+	@Column(name = "FUNDING_TEXT", length = 2048)
+	private String fundingText;
+	
+	@Column(name = "ISNB")
+	private String isbn;
 	
 	@Column(name = "ISSN")
 	private String issn;
 	
+	@Lob
 	@Column(name = "JOURNAL")
 	private String journal;
 	
@@ -109,7 +126,7 @@ public class Data {
 	private String note;
 	
 	@Column(name = "NUMBER")
-	private int number;
+	private String number;
 	
 	@Column(name = "NUMBER_OF_CITED_REFERENCES")
 	private int numberOfCitedReferences;
@@ -117,11 +134,14 @@ public class Data {
 	@Column(name = "ORCID_NUMBERS")
 	private String orcidNumbers;
 	
-	@Column(name = "PAGE_BEGIN")
-	private int pageBegin;
+	@Column(name = "ORGANIZATION")
+	private String organization;
 	
-	@Column(name = "PAGE_END")
-	private int pageEnd;
+	@Column(name = "PAGE_COUNT")
+	private int pageCount;
+	
+	@Column(name = "PAGES")
+	private String pages;
 	
 	@Column(name = "PUBLISHER")
 	private String publisher;
@@ -129,14 +149,17 @@ public class Data {
 	@Column(name = "RESEARCH_AREAS")
 	private String researchAreas;
 	
-	@Column(name = "RESEARCH_ID_NUMBERS")
-	private String researchIdNumbers;
+	@Column(name = "RESEARCHER_ID_NUMBERS")
+	private String researcherIdNumbers;
+	
+	@Column(name = "SERIES")
+	private String series;
 	
 	@Column(name = "SOURCE")
 	private String source;
 	
-	@Column(name = "TIME_CITED")
-	private int timeCited;
+	@Column(name = "TIMES_CITED")
+	private int timesCited;
 	
 	@Column(name = "TITLE")
 	private String title;
@@ -170,16 +193,17 @@ public class Data {
 
 	public Data() {}
 
-	public Data(Long id, TypeEnum typeBibliography, String nameBibliography, String summary, String address,
-			String affiliation, String articleNumber, String author, String authorEmail, String authorKeywords, 
-			String bookTitle, Date dateAdded, Date dateModified, String docDeliveryNumber,
-			DocumentEnum documentType, String doi, String eissn, String issn, String journal, String journalIso,
-			String keywords, String keywordsPlus, String language, String markedentry, String month, String note,
-			int number, int numberOfCitedReferences, String orcidNumbers, int pageBegin, int pageEnd, String publisher,
-			String researchAreas, String researchIdNumbers, String source, int timeCited, String title,
-			boolean toDownload, String type, String uniqueId, String url, int usageCountLast180Days,
+	public Data(TypeEnum typeBibliography, String nameBibliography, String summary, String address, String affiliation,
+			String articleNumber, String author, String authorEmail, String authorKeywords, String bookTitle,
+			Date dateAdded, Date dateModified, String docDeliveryNumber, DocumentEnum documentType, String doi,
+			String editor, String eissn, String fundingAcknowledgement, String fundingText, String isbn, String issn,
+			String journal, String journalIso, String keywords, String keywordsPlus, String language,
+			String markedentry, String month, String note, String number, int numberOfCitedReferences,
+			String orcidNumbers, String organization, int pageCount, String pages, String publisher,
+			String researchAreas, String researcherIdNumbers, String series, String source, int timesCited,
+			String title, boolean toDownload, String type, String uniqueId, String url, int usageCountLast180Days,
 			int usageCountSince_2013, String volume, String webOfScienceCategories, int year) {
-		this.id = id;
+		super();
 		this.typeBibliography = typeBibliography;
 		this.nameBibliography = nameBibliography;
 		this.summary = summary;
@@ -195,7 +219,11 @@ public class Data {
 		this.docDeliveryNumber = docDeliveryNumber;
 		this.documentType = documentType;
 		this.doi = doi;
+		this.editor = editor;
 		this.eissn = eissn;
+		this.fundingAcknowledgement = fundingAcknowledgement;
+//		this.fundingText = fundingText;
+		this.isbn = isbn;
 		this.issn = issn;
 		this.journal = journal;
 		this.journalIso = journalIso;
@@ -208,13 +236,15 @@ public class Data {
 		this.number = number;
 		this.numberOfCitedReferences = numberOfCitedReferences;
 		this.orcidNumbers = orcidNumbers;
-		this.pageBegin = pageBegin;
-		this.pageEnd = pageEnd;
+		this.organization = organization;
+		this.pageCount = pageCount;
+		this.pages = pages;
 		this.publisher = publisher;
 		this.researchAreas = researchAreas;
-		this.researchIdNumbers = researchIdNumbers;
+		this.researcherIdNumbers = researcherIdNumbers;
+		this.series = series;
 		this.source = source;
-		this.timeCited = timeCited;
+		this.timesCited = timesCited;
 		this.title = title;
 		this.toDownload = toDownload;
 		this.type = type;
@@ -307,11 +337,11 @@ public class Data {
 		this.authorKeywords = authorKeywords;
 	}
 
-	public List<String> getBdskUrl() {
+	public List<Bdsk_url> getBdskUrl() {
 		return bdskUrl;
 	}
 
-	public void setBdskUrl(List<String> bdskUrl) {
+	public void setBdskUrl(List<Bdsk_url> bdskUrl) {
 		this.bdskUrl = bdskUrl;
 	}
 
@@ -363,12 +393,44 @@ public class Data {
 		this.doi = doi;
 	}
 
+	public String getEditor() {
+		return editor;
+	}
+
+	public void setEditor(String editor) {
+		this.editor = editor;
+	}
+
 	public String getEissn() {
 		return eissn;
 	}
 
 	public void setEissn(String eissn) {
 		this.eissn = eissn;
+	}
+
+	public String getFundingAcknowledgement() {
+		return fundingAcknowledgement;
+	}
+
+	public void setFundingAcknowledgement(String fundingAcknowledgement) {
+		this.fundingAcknowledgement = fundingAcknowledgement;
+	}
+
+//	public String getFundingText() {
+//		return fundingText;
+//	}
+//
+//	public void setFundingText(String fundingText) {
+//		this.fundingText = fundingText;
+//	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 	public String getIssn() {
@@ -443,11 +505,11 @@ public class Data {
 		this.note = note;
 	}
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 
@@ -467,20 +529,28 @@ public class Data {
 		this.orcidNumbers = orcidNumbers;
 	}
 
-	public int getPageBegin() {
-		return pageBegin;
+	public String getOrganization() {
+		return organization;
 	}
 
-	public void setPageBegin(int pageBegin) {
-		this.pageBegin = pageBegin;
+	public void setOrganization(String organization) {
+		this.organization = organization;
 	}
 
-	public int getPageEnd() {
-		return pageEnd;
+	public int getPageCount() {
+		return pageCount;
 	}
 
-	public void setPageEnd(int pageEnd) {
-		this.pageEnd = pageEnd;
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public String getPages() {
+		return pages;
+	}
+
+	public void setPages(String pages) {
+		this.pages = pages;
 	}
 
 	public String getPublisher() {
@@ -499,12 +569,20 @@ public class Data {
 		this.researchAreas = researchAreas;
 	}
 
-	public String getResearchIdNumbers() {
-		return researchIdNumbers;
+	public String getResearcherIdNumbers() {
+		return researcherIdNumbers;
 	}
 
-	public void setResearchIdNumbers(String researchIdNumbers) {
-		this.researchIdNumbers = researchIdNumbers;
+	public void setResearcherIdNumbers(String researcherIdNumbers) {
+		this.researcherIdNumbers = researcherIdNumbers;
+	}
+
+	public String getSeries() {
+		return series;
+	}
+
+	public void setSeries(String series) {
+		this.series = series;
 	}
 
 	public String getSource() {
@@ -515,12 +593,12 @@ public class Data {
 		this.source = source;
 	}
 
-	public int getTimeCited() {
-		return timeCited;
+	public int getTimesCited() {
+		return timesCited;
 	}
 
-	public void setTimeCited(int timeCited) {
-		this.timeCited = timeCited;
+	public void setTimesCited(int timesCited) {
+		this.timesCited = timesCited;
 	}
 
 	public String getTitle() {

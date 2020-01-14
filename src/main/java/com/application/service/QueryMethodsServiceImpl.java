@@ -12,7 +12,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.application.dao.BdskUrlRepository;
 import com.application.dao.DataRepository;
+import com.application.entity.Bdsk_url;
 import com.application.entity.Data;
 
 @Service
@@ -20,6 +22,9 @@ public class QueryMethodsServiceImpl implements QueryMethodsService {
 
 	@Autowired
 	private DataRepository dataRepository;
+	
+	@Autowired
+	private BdskUrlRepository bdskUrlRepository;
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -54,6 +59,13 @@ public class QueryMethodsServiceImpl implements QueryMethodsService {
 	public long createData(Data data) {
 		if (data != null) {
 			data.setDateAdded(new Date(System.currentTimeMillis()));
+			data.setDateModified(new Date(System.currentTimeMillis()));
+			
+			if (data.getBdskUrl() != null) {
+				for (Bdsk_url bdsk : data.getBdskUrl()) {
+					bdskUrlRepository.save(bdsk);
+				}
+			}
 			
 			return dataRepository.save(data).getId();
 		}

@@ -18,4 +18,24 @@ public class Bdsk_url {
 	
 	@Column(name = "URL")
 	private String url;
+
+	public Bdsk_url(String url) {
+		this.url = url;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

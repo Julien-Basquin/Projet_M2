@@ -1,15 +1,11 @@
 package com.application;
 
-import java.sql.Date;
-import java.time.Instant;
-import java.util.Collection;
+import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -26,6 +22,7 @@ import com.application.entity.enumeration.DocumentEnum;
 import com.application.entity.enumeration.TypeEnum;
 import com.application.service.QueryMethodsService;
 import com.application.service.QueryMethodsServiceImpl;
+import com.application.util.Import;
 
 @SpringBootApplication
 public class Starter {
@@ -33,10 +30,11 @@ public class Starter {
 
 	private static final Logger log = LogManager.getLogger(WebSecurityConfig.class);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ApplicationContext context =   SpringApplication.run(Starter.class, args);
 		//insertUserAndGetUser(context);
-		dataTest(context);
+//		dataTest(context);
+		Import.importMethode(context.getBean(QueryMethodsServiceImpl.class), "../data-to-use-v4.bib");
 	}
 
 
