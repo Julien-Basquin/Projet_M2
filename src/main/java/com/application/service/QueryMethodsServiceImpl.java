@@ -1,7 +1,5 @@
 package com.application.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -9,7 +7,6 @@ import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +39,7 @@ public class QueryMethodsServiceImpl implements QueryMethodsService {
 		return !m.find();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Data> executeQuery(String query) {
 		if (checkQueryValidity(query)) {
