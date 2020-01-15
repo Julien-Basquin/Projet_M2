@@ -57,7 +57,7 @@ public class AccueilControlleur {
 	public String research(@RequestParam( "requete" ) String requete, HttpServletRequest request, Model model) throws Exception {
 		try {
 			List<Data> datas = query.executeQuery(requete);
-//			System.err.println(requete);
+			System.err.println(requete);
 			model.addAttribute( "datas", datas );
 		} catch (Exception e) {
 			List<Data> datas = new ArrayList<Data>();
