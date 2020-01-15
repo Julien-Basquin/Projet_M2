@@ -44,7 +44,7 @@ public class AccueilControlleur {
 	@RequestMapping(value = "/accueil")
 	public String init(HttpServletRequest request, Model model) throws Exception {
 		try {
-			String requete = "SELECT * FROM DATA;";
+			String requete = "SELECT * FROM DATA WHERE DATA.ID = 2;";
 			List<Data> datas = new ArrayList<Data>();
 			model.addAttribute( "datas", datas );
 			model.addAttribute( "requete", requete );
@@ -57,6 +57,7 @@ public class AccueilControlleur {
 	public String research(@RequestParam( "requete" ) String requete, HttpServletRequest request, Model model) throws Exception {
 		try {
 			List<Data> datas = query.executeQuery(requete);
+//			System.err.println(requete);
 			model.addAttribute( "datas", datas );
 		} catch (Exception e) {
 			throw new Exception("Fail to start request");
