@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -27,6 +28,7 @@ import com.application.entity.User;
 import com.application.service.QueryMethodsServiceImpl;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 @SessionAttributes({"currentUser"})
 @Controller
 public class AccueilControlleur {
@@ -46,17 +48,17 @@ public class AccueilControlleur {
 			model.addAttribute( "datas", datas );
 			model.addAttribute( "requete", requete );
 		} catch (Exception e) {
-			throw new Exception("Fail to load Houses");
+			throw new Exception("Fail to initialize accueil");
 		}
 		return definitNavigationEtModule(model, PageName.ACCEUIL);
 	}
 	@RequestMapping(value = "/accueil/research")
-	public String research(HttpServletRequest request, Model model) throws Exception {
+	public String research(@ModelAttribute( "requete" ) @Valid String requete, HttpServletRequest request, Model model) throws Exception {
 		try {
-			List<Data> datas = query.executeQuery();
+			List<Data> datas = query.executeQuery(requete);
 			model.addAttribute( "datas", datas );
 		} catch (Exception e) {
-			throw new Exception("Fail to load Houses");
+			throw new Exception("Fail to start request");
 		}
 		return definitNavigationEtModule(model, PageName.ACCEUIL);
 	}
