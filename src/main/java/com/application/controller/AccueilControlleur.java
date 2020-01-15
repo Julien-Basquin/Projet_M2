@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.application.domaine.PdfUserDetails;
@@ -53,7 +54,7 @@ public class AccueilControlleur {
 		return definitNavigationEtModule(model, PageName.ACCEUIL);
 	}
 	@RequestMapping(value = "/accueil/research")
-	public String research(@ModelAttribute( "requete" ) @Valid String requete, HttpServletRequest request, Model model) throws Exception {
+	public String research(@RequestParam( "requete" ) String requete, HttpServletRequest request, Model model) throws Exception {
 		try {
 			List<Data> datas = query.executeQuery(requete);
 			model.addAttribute( "datas", datas );

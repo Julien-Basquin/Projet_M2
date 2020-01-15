@@ -40,8 +40,8 @@
         	<td colspan="2" style="text-align: left;">
         		<div class="media-body">
                 	<div class="form-group">
-                		<textarea class="form-control animated" placeholder="Requête" th:text="${requete}" ></textarea>
-                		<a class="btn btn-info pull-right" style="margin-top:10px" th:href="@{/accueil/research}">Rechercher</a>
+                		<textarea class="form-control animated" th:name="requete" placeholder="Requête" th:text="${requete}" ></textarea>
+                		<a class="btn btn-info pull-right" style="margin-top:10px" th:href="@{/accueil/research(requete=${requete})}">Rechercher</a>
                		</div>      
         		</div>
 			</td>
