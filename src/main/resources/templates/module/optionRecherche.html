@@ -44,7 +44,7 @@
   				method="post">
   				<div class="media-body">
                 	<div class="form-group">
-                		<input class="form-control animated" th:name="requete" placeholder="Requête" th:text="${requete}">
+                		<textarea class="form-control animated" th:name="requete" placeholder="Requête" th:text="${requete}"></textarea>
                 		<a class="btn btn-info pull-right" style="margin-top:10px" th:href="@{/accueil/research(requete=${requete})}">Rechercher</a>
                		</div>      
         		</div>
