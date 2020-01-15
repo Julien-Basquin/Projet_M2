@@ -428,7 +428,7 @@ public abstract class Import {
 							break;
 						case "pageCount":
 							if (d.getPageCount() != 0) {
-								writer.write(",\n\tPAge_Count = {" + d.getPageCount() + "}");
+								writer.write(",\n\tPage_Count = {" + d.getPageCount() + "}");
 							}
 							break;
 						case "pages":
@@ -498,7 +498,7 @@ public abstract class Import {
 							break;
 						case "usageCountSince2013":
 							if (d.getUsageCountSince2013() != 0) {
-								writer.write(",\n\tUsafe-Count-Since-2013 = {" + d.getUsageCountSince2013() + "}");
+								writer.write(",\n\tUsage-Count-Since-2013 = {" + d.getUsageCountSince2013() + "}");
 							}
 							break;
 						case "volume":
