@@ -7,11 +7,29 @@
 
 <body>
 	<nav th:replace="module/common :: navFragment"></nav>
-	
-	<div class="container">
-		<fieldset>
-			<div th:if="${moduleActif?.moduleAccueil}?" th:replace="module/accueil :: ${moduleActif?.moduleAccueil}? fragment-accueil : 'fragment-blanck'"></div>
-		</fieldset>	
+
+	<div class="container" style="width: fit-content;">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="col-sm-2" scope="col">Option de la recherche</th>
+							<th class="col-sm-2"scope="col">Résultat de la recheche</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="col-sm-2">
+								<div th:include="module/optionRecherche :: optionRecherche">></div>
+							</td>
+							<td class="col-sm-2">
+								<div th:include="module/resultatRecherche :: resultatRecherche">></div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</fieldset>
 	</div>
 </body>
 </html>

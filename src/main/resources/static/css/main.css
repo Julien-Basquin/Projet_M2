@@ -3,6 +3,12 @@ body {
   padding-top: 70px;
 }
 
+.animated {
+  -webkit-transition: height 0.2s;
+  -moz-transition: height 0.2s;
+  transition: height 0.2s;
+}
+
 .mr-2,
 .mx-2 {
   margin-right: 0.5rem !important;

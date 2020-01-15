@@ -1,0 +1,55 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+<div th:fragment="optionRecherche" class="table-responsive">
+	<table id="myTable" class=" table order-list">
+    <thead>
+        <tr>
+            <td class="col-sm-2" >Option</td>
+            <td class="col-sm-2" >Paramètre</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="col-sm-2">
+                <div class="input-group-prepend">
+                	<div class="form-group">
+      					<input class="text-center" disabled="disabled" value="WHERE" s>
+  					</div>
+  				</div>
+            </td>
+            <td class="col-sm-2">
+                <input type="mail" name="mail"  class="form-control"/>
+            </td>
+            <td class="col-sm-1"><a class="deleteRow"></a>
+
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2" style="text-align: left;">
+                <input type="button" class="btn btn-lg btn-block " id="addrow" value="Ajout d'un paramètre" />
+            </td>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+        	<td colspan="2" style="text-align: left;">
+        		<div class="media-body">
+                	<div class="form-group">
+                		<textarea class="form-control animated" placeholder="Requête"></textarea>
+                		<button class="btn btn-info pull-right" style="margin-top:10px" type="button">Recherché</button>
+               		</div>      
+        		</div>
+			</td>
+        </tr>
+    </tfoot>
+    
+    
+    
+    
+</table>
+</div>
