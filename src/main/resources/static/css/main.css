@@ -8,6 +8,9 @@ body {
   -moz-transition: height 0.2s;
   transition: height 0.2s;
 }
+.col-sm-3{
+ 	min-width: 500px;
+}
 
 .mr-2,
 .mx-2 {

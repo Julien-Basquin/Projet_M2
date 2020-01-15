@@ -1,57 +1,129 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <div th:fragment="resultatRecherche" class="table-responsive">
-  <table class="table">
-    <thead>
+  <table class="table" th:if="${#lists.size(datas) != 0}">
+    <thead class="thead-dark">
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Heading</th>
-        <th scope="col">Heading</th>
-        <th scope="col">Heading</th>
-        <th scope="col">Heading</th>
-        <th scope="col">Heading</th>
-        <th scope="col">Heading</th>
-        <th scope="col">Heading</th>
-        <th scope="col">Heading</th>
-        <th scope="col">Heading</th>
+        <th scope="col">ID</th>
+        <th scope="col">TYPE_BIBLIOGRAPHY</th>
+        <th scope="col">NAME_BIBLIOGRAPHY</th>
+        <th scope="col">ABSTRACT</th>
+        <th scope="col">ADDRESS</th>
+        <th scope="col">AFFILIATION</th>
+        <th scope="col">ARTICLE_NUMBER</th>
+        <th scope="col">AUTHOR</th>
+        <th scope="col">AUTHOR_EMAIL</th>
+        <th scope="col">AUTHOR_KEYWORDS</th>
+        <th scope="col">BDSK_URL</th>
+        <th scope="col">BOOK_TITLE</th>
+        <th scope="col">DATE_ADDED</th>
+        <th scope="col">DATE_MODIFIED</th>
+        <th scope="col">DOC_DELIVERY_NUMBER</th>
+        <th scope="col">DOCUMENT_TYPE</th>
+        <th scope="col">DOI</th>
+        <th scope="col">EDITOR</th>
+        <th scope="col">EISSN</th>
+        <th scope="col">FUNDING_ACKNOWLEDGEMENT</th>
+        <th scope="col">FUNDING_TEXT</th>
+        <th scope="col">ISNB</th>
+        <th scope="col">ISSN</th>
+        <th scope="col">JOURNAL</th>
+        <th scope="col">JOURNAL_ISO</th>
+        <th scope="col">KEYWORDS</th>
+        <th scope="col">KEYWORDS_PLUS</th>
+        <th scope="col">LANGUAGE</th>
+        <th scope="col">MARKEDENTRY</th>
+        <th scope="col">MONTH</th>
+        <th scope="col">NOTE</th>
+        <th scope="col">NUMBER</th>
+        <th scope="col">NUMBER_OF_CITED_REFERENCES</th>
+        <th scope="col">ORCID_NUMBERS</th>
+        <th scope="col">ORGANIZATION</th>
+        <th scope="col">PAGE_COUNT</th>
+        <th scope="col">PAGES</th>
+        <th scope="col">PUBLISHER</th>
+        <th scope="col">RESEARCH_AREAS</th>
+        <th scope="col">RESEARCHER_ID_NUMBERS</th>
+        <th scope="col">SERIES</th>
+        <th scope="col">SOURCE</th>
+        <th scope="col">TIMES_CITED</th>
+        <th scope="col">TITLE</th>
+        <th scope="col">TO_DOWNLOAD</th>
+        <th scope="col">TYPE</th>
+        <th scope="col">UNIQUE_ID</th>
+        <th scope="col">URL</th>
+        <th scope="col">USAGE_COUNT_LAST_180_DAYS</th>
+        <th scope="col">USAGE_COUNT_SINCE_2013</th>
+        <th scope="col">VOLUME</th>
+        <th scope="col">WEB_OF_SCIENCE_CATEGORIES</th>
+        <th scope="col">YEAR</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
-        <td>Cell</td>
+      <tr th:each="data : ${datas}">
+        <th scope="row" th:text="${data?.id}"></th>
+        <td data-header="Code" th:text="${data?.typeBibliography}"></td>
+        
+        
+        <td data-header="Code" th:text="${data?.nameBibliography}"></td>
+        <td data-header="Code" th:text="${data?.summary}"></td>
+        <td data-header="Code" th:text="${data?.address}"></td>
+        <td data-header="Code" th:text="${data?.affiliation}"></td>
+        <td data-header="Code" th:text="${data?.articleNumber}"></td>
+        <td data-header="Code" th:text="${data?.author}"></td>
+        <td data-header="Code" th:text="${data?.authorEmail}"></td>
+        <td data-header="Code" th:text="${data?.authorKeywords}"></td>
+        
+        <td data-header="Code" th:text="${data?.bdskUrl}">
+        <table class="table" th:if="${#lists.size(data?.bdskUrl) != 0}">
+			<tr th:each="urlbdsk : ${data?.bdskUrl}">
+				<th scope="row" th:text="${urlbdsk?.url}"></th>
+			</tr>
+		</table>
+		</td>
+        
+        <td data-header="Code" th:text="${data?.bookTitle}"></td>
+        <td data-header="Code" th:text="${data?.dateAdded}"></td>
+        <td data-header="Code" th:text="${data?.dateModified}"></td>
+        <td data-header="Code" th:text="${data?.docDeliveryNumber}"></td>
+        <td data-header="Code" th:text="${data?.documentType}"></td>
+        <td data-header="Code" th:text="${data?.doi}"></td>
+        <td data-header="Code" th:text="${data?.editor}"></td>
+        <td data-header="Code" th:text="${data?.eissn}"></td>
+        <td data-header="Code" th:text="${data?.fundingAcknowledgement}"></td>
+        <td data-header="Code" th:text="${data?.fundingText}"></td>
+        <td data-header="Code" th:text="${data?.isbn}"></td>
+        <td data-header="Code" th:text="${data?.issn}"></td>
+        <td data-header="Code" th:text="${data?.journal}"></td>
+        <td data-header="Code" th:text="${data?.journalIso}"></td>
+        <td data-header="Code" th:text="${data?.keywords}"></td>
+        <td data-header="Code" th:text="${data?.keywordsPlus}"></td>
+        <td data-header="Code" th:text="${data?.language}"></td>
+        <td data-header="Code" th:text="${data?.markedentry}"></td>
+        <td data-header="Code" th:text="${data?.month}"></td>
+        <td data-header="Code" th:text="${data?.note}"></td>
+        <td data-header="Code" th:text="${data?.number}"></td>
+        <td data-header="Code" th:text="${data?.numberOfCitedReferences}"></td>
+        <td data-header="Code" th:text="${data?.orcidNumbers}"></td>
+        <td data-header="Code" th:text="${data?.organization}"></td>
+        <td data-header="Code" th:text="${data?.pageCount}"></td>
+        <td data-header="Code" th:text="${data?.pages}"></td>
+        <td data-header="Code" th:text="${data?.publisher}"></td>
+        <td data-header="Code" th:text="${data?.researchAreas}"></td>
+        <td data-header="Code" th:text="${data?.researcherIdNumbers}"></td>
+        <td data-header="Code" th:text="${data?.series}"></td>
+        <td data-header="Code" th:text="${data?.source}"></td>
+        <td data-header="Code" th:text="${data?.timesCited}"></td>
+        <td data-header="Code" th:text="${data?.title}"></td>
+        <td data-header="Code" th:text="${data?.toDownload}"></td>
+        <td data-header="Code" th:text="${data?.type}"></td>
+        <td data-header="Code" th:text="${data?.uniqueId}"></td>
+        <td data-header="Code" th:text="${data?.url}"></td>
+        <td data-header="Code" th:text="${data?.usageCountLast180Days}"></td>
+        <td data-header="Code" th:text="${data?.usageCountSince2013}"></td>
+        <td data-header="Code" th:text="${data?.volume}"></td>
+        <td data-header="Code" th:text="${data?.webOfScienceCategories}"></td>
+        <td data-header="Code" th:text="${data?.year}"></td>
       </tr>
     </tbody>
   </table>
