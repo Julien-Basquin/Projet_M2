@@ -16,9 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.application.entity.enumeration.DocumentEnum;
-import com.application.entity.enumeration.TypeEnum;
-
 @Entity 
 @Table(name = "DATA")
 public class Data {
@@ -29,7 +26,7 @@ public class Data {
 	private Long id;
 	
 	@Column(name = "TYPE_BIBLIOGRAPHY", nullable = false)
-	private TypeEnum typeBibliography;
+	private String typeBibliography;
 	
 	@Column(name = "NAME_BIBLIOGRAPHY", nullable = false)
 	private String nameBibliography;
@@ -58,7 +55,7 @@ public class Data {
 	private String authorKeywords;
 
 	@Column(name = "BDSK_URL")
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Bdsk_url.class)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Bdsk_url.class)
 	private List<Bdsk_url> bdskUrl;
 	
 	@Column(name = "BOOK_TITLE")
@@ -68,7 +65,7 @@ public class Data {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateAdded;
 	
-	@Column(name = "DATE_MODIFIED")
+	@Column(name = "DATE_MODIFIED", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateModified;
 	
@@ -76,7 +73,7 @@ public class Data {
 	private String docDeliveryNumber;
 	
 	@Column(name = "DOCUMENT_TYPE")
-	private DocumentEnum documentType;
+	private String documentType;
 	
 	@Column(name = "DOI")
 	private String doi;
@@ -180,7 +177,7 @@ public class Data {
 	private int usageCountLast180Days;
 	
 	@Column(name = "USAGE_COUNT_SINCE_2013")
-	private int usageCountSince_2013;
+	private int usageCountSince2013;
 	
 	@Column(name = "VOLUME")
 	private String volume;
@@ -193,16 +190,16 @@ public class Data {
 
 	public Data() {}
 
-	public Data(TypeEnum typeBibliography, String nameBibliography, String summary, String address, String affiliation,
+	public Data(String typeBibliography, String nameBibliography, String summary, String address, String affiliation,
 			String articleNumber, String author, String authorEmail, String authorKeywords, String bookTitle,
-			Date dateAdded, Date dateModified, String docDeliveryNumber, DocumentEnum documentType, String doi,
+			Date dateAdded, Date dateModified, String docDeliveryNumber, String documentType, String doi,
 			String editor, String eissn, String fundingAcknowledgement, String fundingText, String isbn, String issn,
 			String journal, String journalIso, String keywords, String keywordsPlus, String language,
 			String markedentry, String month, String note, String number, int numberOfCitedReferences,
 			String orcidNumbers, String organization, int pageCount, String pages, String publisher,
 			String researchAreas, String researcherIdNumbers, String series, String source, int timesCited,
 			String title, boolean toDownload, String type, String uniqueId, String url, int usageCountLast180Days,
-			int usageCountSince_2013, String volume, String webOfScienceCategories, int year) {
+			int usageCountSince2013, String volume, String webOfScienceCategories, int year) {
 		super();
 		this.typeBibliography = typeBibliography;
 		this.nameBibliography = nameBibliography;
@@ -251,7 +248,7 @@ public class Data {
 		this.uniqueId = uniqueId;
 		this.url = url;
 		this.usageCountLast180Days = usageCountLast180Days;
-		this.usageCountSince_2013 = usageCountSince_2013;
+		this.usageCountSince2013 = usageCountSince2013;
 		this.volume = volume;
 		this.webOfScienceCategories = webOfScienceCategories;
 		this.year = year;
@@ -265,11 +262,11 @@ public class Data {
 		this.id = id;
 	}
 
-	public TypeEnum getTypeBibliography() {
+	public String getTypeBibliography() {
 		return typeBibliography;
 	}
 
-	public void setTypeBibliography(TypeEnum typeBibliography) {
+	public void setTypeBibliography(String typeBibliography) {
 		this.typeBibliography = typeBibliography;
 	}
 
@@ -377,11 +374,11 @@ public class Data {
 		this.docDeliveryNumber = docDeliveryNumber;
 	}
 
-	public DocumentEnum getDocumentType() {
+	public String getDocumentType() {
 		return documentType;
 	}
 
-	public void setDocumentType(DocumentEnum documentType) {
+	public void setDocumentType(String documentType) {
 		this.documentType = documentType;
 	}
 
@@ -417,13 +414,13 @@ public class Data {
 		this.fundingAcknowledgement = fundingAcknowledgement;
 	}
 
-//	public String getFundingText() {
-//		return fundingText;
-//	}
-//
-//	public void setFundingText(String fundingText) {
-//		this.fundingText = fundingText;
-//	}
+	public String getFundingText() {
+		return fundingText;
+	}
+
+	public void setFundingText(String fundingText) {
+		this.fundingText = fundingText;
+	}
 
 	public String getIsbn() {
 		return isbn;
@@ -649,12 +646,12 @@ public class Data {
 		this.usageCountLast180Days = usageCountLast180Days;
 	}
 
-	public int getUsageCountSince_2013() {
-		return usageCountSince_2013;
+	public int getUsageCountSince2013() {
+		return usageCountSince2013;
 	}
 
-	public void setUsageCountSince_2013(int usageCountSince_2013) {
-		this.usageCountSince_2013 = usageCountSince_2013;
+	public void setUsageCountSince2013(int usageCountSince2013) {
+		this.usageCountSince2013 = usageCountSince2013;
 	}
 
 	public String getVolume() {
@@ -683,6 +680,11 @@ public class Data {
 
 	@Override
 	public String toString() {
-		return id + " " + typeBibliography.name() + " " + nameBibliography;
+		return id + " " + typeBibliography + " " + nameBibliography;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return id == ((Data) obj).getId();
 	}
 }

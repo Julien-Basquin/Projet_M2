@@ -13,13 +13,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.application.configuration.WebSecurityConfig;
 import com.application.dao.AuthorityRepository;
+import com.application.dao.BdskUrlRepository;
 import com.application.dao.UserRepository;
 import com.application.entity.Authority;
 import com.application.entity.Data;
 import com.application.entity.User;
 import com.application.entity.enumeration.AuthorityEnum;
-import com.application.entity.enumeration.DocumentEnum;
-import com.application.entity.enumeration.TypeEnum;
 import com.application.service.QueryMethodsService;
 import com.application.service.QueryMethodsServiceImpl;
 import com.application.util.Import;
@@ -34,7 +33,8 @@ public class Starter {
 		ApplicationContext context =   SpringApplication.run(Starter.class, args);
 		//insertUserAndGetUser(context);
 //		dataTest(context);
-		Import.importMethode(context.getBean(QueryMethodsServiceImpl.class), "../data-to-use-v4.bib");
+//		Import.importMethode(context.getBean(QueryMethodsServiceImpl.class), "export1.txt");
+//		Import.exportMethode(context.getBean(QueryMethodsServiceImpl.class), context.getBean(BdskUrlRepository.class), "FROM bdsk_url bu, data d, data_bdsk_url dbu", "where dbu.data_id = d.id and dbu.bdsk_url_id = bu.id and bu.id = 3");
 	}
 
 
@@ -67,9 +67,9 @@ public class Starter {
 		QueryMethodsService queryMethodsService = context.getBean(QueryMethodsServiceImpl.class);
 		
 		Data data = new Data();
-		data.setTypeBibliography(TypeEnum.ARTICLE);
+		data.setTypeBibliography("article");
 		data.setNameBibliography("Test");
-		data.setDocumentType(DocumentEnum.ARTICLE);
+		data.setDocumentType("article");
 		
 		queryMethodsService.createData(data);
 		

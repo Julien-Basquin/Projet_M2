@@ -19,6 +19,8 @@ public class Bdsk_url {
 	@Column(name = "URL")
 	private String url;
 
+	public Bdsk_url() {}
+
 	public Bdsk_url(String url) {
 		this.url = url;
 	}
