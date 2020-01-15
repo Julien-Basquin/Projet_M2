@@ -60,6 +60,8 @@ public class AccueilControlleur {
 //			System.err.println(requete);
 			model.addAttribute( "datas", datas );
 		} catch (Exception e) {
+			List<Data> datas = new ArrayList<Data>();
+			model.addAttribute( "datas", datas );
 			throw new Exception("Fail to start request");
 		}
 		return definitNavigationEtModule(model, PageName.ACCEUIL);
