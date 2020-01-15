@@ -15,42 +15,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.application.service.UserDetailsServiceImpl;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
-
 	private static final Logger log = LogManager.getLogger(WebSecurityConfig.class);
-
-	@Bean
-	public UserDetailsService createUserDetailsService() {
-		return new UserDetailsServiceImpl();
-
-
-	}
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailsService);
-		authProvider.setPasswordEncoder(passwordEncoder());
-		log.info("authProvider : " + authProvider.toString());
-		return authProvider;
-	}
-
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		auth.authenticationProvider(authenticationProvider());
 	}
 
 	@Override
@@ -59,9 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		log.info("Into configure");
 
 		http.httpBasic().and()
-		.authorizeRequests().antMatchers("/", "/accueil", "/css/**", "/imgs/**", "/i18n/**", "/login", "/error")
+		.authorizeRequests().antMatchers("/")
 		.permitAll()
-		.anyRequest().authenticated().and()
+		.anyRequest().permitAll().and()
 		.formLogin().usernameParameter("username").passwordParameter("password").permitAll()
 		.successForwardUrl("/postLogin")
 		.and()
@@ -73,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.permitAll()
 		.and()
 		.rememberMe()
-		.userDetailsService(userDetailsService).and()
+		.and()
 		.csrf().disable();
 
 	}
