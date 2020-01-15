@@ -1,5 +1,7 @@
 package com.application.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,12 @@ public class AccueilControlleur {
 
 	@RequestMapping(value = "/accueil")
 	public String init(HttpServletRequest request, Model model) {
+		try {
+			List<Data> datas = null;
+			model.addAttribute( "datas", datas );
+		} catch (Exception e) {
+			throw new Exception("Fail to load Houses");
+		}
 		return definitNavigationEtModule(model, PageName.ACCEUIL);
 	}
 	@RequestMapping(value = {"", "/"})
