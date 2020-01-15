@@ -1,5 +1,6 @@
 package com.application.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -18,16 +18,13 @@ import com.application.util.PageName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.application.domaine.PdfUserDetails;
+import com.application.entity.Data;
 import com.application.entity.User;
+import com.application.service.QueryMethodsServiceImpl;
 
 import javax.servlet.http.HttpSession;
 @SessionAttributes({"currentUser"})
@@ -38,17 +35,32 @@ public class AccueilControlleur {
 
 	@Autowired
 	private DetailModule moduleActif;
+	@Autowired
+	private QueryMethodsServiceImpl query;
 
 	@RequestMapping(value = "/accueil")
-	public String init(HttpServletRequest request, Model model) {
+	public String init(HttpServletRequest request, Model model) throws Exception {
 		try {
-			List<Data> datas = null;
+			String requete = "SELECT * FROM DATA;";
+			List<Data> datas = new ArrayList<Data>();
+			model.addAttribute( "datas", datas );
+			model.addAttribute( "requete", requete );
+		} catch (Exception e) {
+			throw new Exception("Fail to load Houses");
+		}
+		return definitNavigationEtModule(model, PageName.ACCEUIL);
+	}
+	@RequestMapping(value = "/accueil/research")
+	public String research(HttpServletRequest request, Model model) throws Exception {
+		try {
+			List<Data> datas = query.executeQuery();
 			model.addAttribute( "datas", datas );
 		} catch (Exception e) {
 			throw new Exception("Fail to load Houses");
 		}
 		return definitNavigationEtModule(model, PageName.ACCEUIL);
 	}
+	
 	@RequestMapping(value = {"", "/"})
 	public String init2(HttpServletRequest request, Model model) {
 		return definitNavigationEtModule(model, PageName.REDIRECT_ACCEUIL);
